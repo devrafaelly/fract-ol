@@ -1,39 +1,45 @@
 #include "fractol.h"
 
-void    cleanup(t_data *data)
+int mandelbrot()
 {
-    // destruir imagem, SE EXISTIR
-    if (data->img)
-        mlx_destroy_image(data->mlx, data->img);
-    // destruir janela, SE EXISTIR
-    if (data->win)
-        mlx_destroy_window(data->mlx, data->win);
-    // destruir display
-    mlx_destroy_display(data->mlx);
-    // liberar struct
-    free (data->mlx);
-    data->mlx = NULL;
+
 }
 
-int init_program(t_data *data)
+void    cleanup(t_fractal *fractal)
 {
-    data->mlx = mlx_init();
-    if (!data->mlx)
-        return (1);
-    data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Fractol - rafaoliv");
-    if(!data->win)
+    if (fractal->img)
+        mlx_destroy_image(fractal->mlx, fractal->img);
+    if (fractal->win)
+        mlx_destroy_window(fractal->mlx, fractal->win);
+    mlx_destroy_display(fractal->mlx);
+    free (fractal->mlx);
+    fractal->mlx = NULL;
+}
+
+int put_pixel(int x, int y, int color)
+{
+    int offset;
+
+    offset = (img->"pixel->bytes" * y) + (x * (img->bpp / 8));
+}
+
+
+int main(int ac, char **av)
+{
+    t_fractal  fractal;
+
+    if (2 == ac && !ft_strncmp(av[1], "mandelbrot", 10) 
+        || 4 == ac && !ft_strncmp(av[1], "julia", 5))
     {
-        cleanup(data);
-        return (1);
+        fractal.name = av[1];
+        fractal_init(&fractal);
+        fractal_render(&fractal)
+        mlx_loop(fractal.mlx);
+        return (0);
     }
-    return (0);
-}
-
-int main(void)
-{
-    t_data  data;
-
-    init_program(&data);
-    mlx_loop(data.mlx);
-    return (0);
+    else
+    {
+        ft_putstr_fd(ERROR_MESSAGE, STDERR_FILENO);
+        exit(EXIT_FAILURE);
+    }
 }
