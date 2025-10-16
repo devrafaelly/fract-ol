@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 16:12:56 by rafaoliv          #+#    #+#             */
-/*   Updated: 2025/09/23 17:45:43 by rafaoliv         ###   ########.fr       */
+/*   Created: 2025/10/16 19:16:48 by rafaoliv          #+#    #+#             */
+/*   Updated: 2025/10/16 19:16:58 by rafaoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-int	ft_atoi(const char *nptr)
+void	clean_up(t_fractal *fractal)
 {
-	int	signal;
-	int	res;
-
-	signal = 1;
-	res = 0;
-	while (*nptr)
+	if (fractal->img->img_ptr)
+		mlx_destroy_image(fractal->mlx, fractal->img->img_ptr);
+	if (fractal->img)
 	{
-		while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
-		{
-			nptr++;
-		}
-		if (*nptr == '-' || *nptr == '+')
-		{
-			if (*nptr == '-')
-				signal *= -1;
-			nptr++;
-		}
-		while (*nptr >= '0' && *nptr <= '9')
-		{
-			res = res * 10 + (*nptr - '0');
-			nptr++;
-		}
-		return (res * signal);
+		free(fractal->img);
+		fractal->img = NULL;
 	}
-	return (0);
+	if (fractal->win)
+		mlx_destroy_window(fractal->mlx, fractal->win);
+	mlx_destroy_display(fractal->mlx);
+	free (fractal->mlx);
+	fractal->mlx = NULL;
 }
