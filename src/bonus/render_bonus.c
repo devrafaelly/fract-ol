@@ -1,0 +1,117 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/17 16:09:41 by marvin            #+#    #+#             */
+/*   Updated: 2025/10/17 16:09:41 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "fractol.h"
+
+static void	put_pixel(t_img_data *img, int x, int y, int color)
+{
+	char	*pixel;
+
+	pixel = img->pixel_ptr + (y * img->width_bytes) + (x * (img->bpp / 8));
+	*(unsigned int *)pixel = color;
+}
+
+static void	set_ship(t_fractal *fractal, int x, int y)
+{
+	t_complex	z;
+	t_complex	c;
+	int		i;
+
+	z.x = 0.0;
+	z.y = 0.0;
+	c.x = (map(x, -2.0, 1.0, WIDTH) * fractal->zoom) + fractal->shift_x;
+	c.y = (map(y, 1.0, -2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	i = 0;
+	while (i < fractal->definition)
+	{
+		z.x = fabs(z.x);
+		z.y = fabs(z.y);
+		z = sum_complex(square_complex(z, fractal->type), c);
+		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+		{
+			put_color(fractal, i, x, y);
+			return ;
+		}
+		i++;
+	}
+	put_pixel(fractal->img, x, y, BLACK);
+}
+
+static void	set_julia(t_fractal *fractal, int x, int y)
+{
+	t_complex	z;
+	t_complex	c;
+	int		i;
+
+	z.x = (map(x, -2.0, 2.0, WIDTH) * fractal->zoom) + fractal->shift_x;
+	z.y = (map(y, 2.0, -2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	c.x = fractal.julia_x;
+	c.y = fractal.julia_y;
+	i = 0;
+	while (i < fractal->definition)
+	{
+		z = sum_complex(square_complex(z, fractal->type), c);
+		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+		{
+			put_color(fractal, i, x, y);
+			return ;
+		}
+		i++;
+	}
+	put_pixel(fractal->img, x, y, BLACK);
+}
+
+static void	set_mandel_tric(t_fractal *fractal, int x, int y)
+{
+	t_complex	z;
+	t_complex	c;
+	int		i;
+
+	z.x = 0.0;
+	z.y = 0.0;
+	c.x = (map(x, -2.0, 2.0, WIDTH) * fractal->zoom) + fractal->shift_x;
+	c.y = (map(y, 2.0, -2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	i = 0;
+	while (i < fractal->definition)
+	{
+		z = sum_complex(square_complex(z, fractal->type), c);
+		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+		{
+			put_color(fractal, i, x, y);
+			return ;
+		}
+		i++;
+	}
+	put_pixel(fractal->img, x, y, BLACK);
+}
+
+void	fractal_render(t_fractal *fractal)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+		{
+			if (fractal->type == MANDELBROT || fractal->type == TRICORN)
+				set_mandel_tric(fractal, x, y);
+			else if (fractal->type == JULIA)
+				set_julia(fractal, x, y);
+			else if (fractal->type == SHIP)
+				set_ship(fractal, x, y);
+		}
+	}
+	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img->img_ptr, 0, 0);
+}
