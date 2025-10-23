@@ -77,22 +77,19 @@ void	fractal_render(t_fractal *fractal)
 	int	x;
 	int	y;
 
-	y = -1;
-	while (++y < HEIGHT)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		x = -1;
-		while (++x < WIDTH)
+		x = 0;
+		while (x < WIDTH)
 		{
-			switch(fractal->type)
-			{
-			case MANDELBROT:
+			if (fractal->type == MANDELBROT)
 				set_mandel(fractal, x, y);
-				break;
-			case JULIA:
+			else if (fractal->type == JULIA)
 				set_julia(fractal, x, y);
-				break;
-			}
+			x++;
 		}
+		y++;
 	}
 	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img->img_ptr, 0, 0);
 }
