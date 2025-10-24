@@ -22,6 +22,11 @@ int	key_handler(int keysym, t_fractal *fractal)
 {
 	if (keysym == XK_Escape)
 		close_handler(fractal);
+	else if (keysym == 0x3d || keysym == 0xffab)
+		fractal->definition += 10;
+	else if (keysym == XK_minus)
+		fractal->definition -= 10;
+	fractal_render(fractal);
 	return (0);
 }
 

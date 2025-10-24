@@ -66,24 +66,24 @@ typedef struct	s_img_data
 
 typedef struct	s_fractal
 {
-	char		*name;
-	void		*mlx;
-	void		*win;
+	char			*name;
+	void			*mlx;
+	void			*win;
 
-	t_img_data	*img;
+	t_img_data		*img;
 	t_fractal_type	type;
-	t_scheme	scheme;
+	t_scheme		scheme;
 
-	double		color_start;
-	double		color_end;
+	double			color_start;
+	double			color_end;
 
-	double		escape_value;
-	int		definition;
-	double		shift_x;
-	double		shift_y;
-	double		zoom;
-	double		julia_x;
-	double		julia_y;
+	double			escape_value;
+	int				definition;
+	double			shift_x;
+	double			shift_y;
+	double			zoom;
+	double			julia_x;
+	double			julia_y;
 }	t_fractal;
 
 typedef struct	s_complex
@@ -93,11 +93,12 @@ typedef struct	s_complex
 }	t_complex;
 
 void		fractal_render(t_fractal *fractal);
+void		put_pixel(t_img_data *img, int x, int y, int color);
 
 void		fractal_init(t_fractal *fractal);
 
 double		map(double unscaled_num, double new_min, double new_max, double old_max);
-t_complex	square_complex(t_complex z);
+t_complex	square_complex(t_complex z, t_fractal_type type);
 t_complex	sum_complex(t_complex z, t_complex c);
 double		ft_atof(const char *nptr);
 
@@ -105,7 +106,6 @@ int		close_handler(t_fractal *fractal);
 int		key_handler(int keysym, t_fractal *fractal);
 int		mouse_handler(int button, int x, int y, t_fractal *fractal);
 
-void		get_color(t_fractal *fractal);
 void		put_color(t_fractal *fractal, int i, int x, int y);
 
 void		clean_up(t_fractal *fractal);

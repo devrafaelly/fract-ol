@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/29 17:12:54 by rafaoliv          #+#    #+#              #
-#    Updated: 2025/10/17 18:40:36 by marvin           ###   ########.fr        #
+#    Updated: 2025/10/24 19:08:25 by rafaoliv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,22 @@ CFLAGS = -Wall -Werror -Wextra -g -O3
 
 # MANDATORY FILES
 NAME = fractol
-SRC = /src/fractol.c /src/events.c /src/math_utils.c /src/render.c /src/init.c /src/clean_up.c
+SRC = 	src/fractol.c \
+		src/events.c \
+		src/math_utils.c \
+		src/render.c \
+		src/init.c \
+		src/clean_up.c
 OBJ = $(SRC:.c=.o)
 
 # BONUS FILES
-NAME_BONUS = fractol_bonus
-SRC_BONUS = /src/bonus/fractol_bonus.c /src/bonus/events_bonus.c /src/math_utils.c /src/bonus/render_bonus.c /src/bonus/init_bonus.c /src/clean_up.c
+SRC_BONUS = src/bonus/fractol_bonus.c \
+			src/bonus/events_bonus.c \
+			src/bonus/math_utils_bonus.c \
+			src/bonus/render_bonus.c \
+			src/bonus/init_bonus.c \
+			src/bonus/clean_up_bonus.c \
+			src/bonus/fractal_colors_bonus.c
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 # LIBRARIES
@@ -45,12 +55,12 @@ MLX = $(MLX_DIR)/minilibx.a
 MLX_INCLUDES = -I$(MLX_DIR)
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-INCLUDES = $(LIBFT_INCLUDES) $(MLX_INCLUDES)
+INCLUDES = -I. $(LIBFT_INCLUDES) $(MLX_INCLUDES)
 
 # RULES
 all: $(NAME)
 
-bonus: $(NAME_BONUS)
+bonus: .bonus
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -58,25 +68,26 @@ bonus: $(NAME_BONUS)
 
 $(NAME): $(OBJ) $(LIBFT) $(MLX)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME)
-	@echo "$(CYAN)╔═══════════════════════════════════╗$(RESET)"
+	@echo "$(CYAN)╔═════════════════════════════════════╗$(RESET)"
 	@echo "$(CYAN)║ $(GREEN)✨ $(NAME) compilado com sucesso ✨$(CYAN) ║$(RESET)"
-	@echo "$(CYAN)╚═══════════════════════════════════╝$(RESET)"
+	@echo "$(CYAN)╚═════════════════════════════════════╝$(RESET)"
 
-$(NAME_BONUS): $(OBJ_BONUS) $(LIBFT) $(MLX)
-	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME_BONUS)
-	@echo "$(CYAN)╔═════════════════════════════════════════╗$(RESET)"
-	@echo "$(CYAN)║ $(GREEN)✨ $(NAME_BONUS) compilado com sucesso ✨$(CYAN) ║$(RESET)"
-	@echo "$(CYAN)╚═════════════════════════════════════════╝$(RESET)"
+.bonus: $(OBJ_BONUS) $(LIBFT) $(MLX)
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME)
+	@touch .bonus
+	@echo "$(CYAN)╔═════════════════════════════════════════════╗$(RESET)"
+	@echo "$(CYAN)║ $(GREEN)✨ $(NAME) (bonus) compilado com sucesso ✨$(CYAN) ║$(RESET)"
+	@echo "$(CYAN)╚═════════════════════════════════════════════╝$(RESET)"
 
 $(LIBFT):
 	@echo "$(YELLOW)⏳ Compilando libft...$(RESET)"
-	@make -C $(LIBFT_DIR)
-	@echo "$(GREEN)✔️  libft compilada$(RESET)"
+	@make -C $(LIBFT_DIR) --silent
+	@echo "$(GREEN)✔️ libft compilada$(RESET)"
 
 $(MLX):
 	@echo "$(YELLOW)⏳ Compilando mlx...$(RESET)"
-	@make -C $(MLX_DIR)
-	@echo "$(GREEN)✔️  mlx compilada$(RESET)"
+	@make -C $(MLX_DIR) --silent
+	@echo "$(GREEN)✔️ mlx compilada$(RESET)"
 
 norminette:
 	@echo "$(BLUE)🔍 Verificando norminette do fractol...$(RESET)"
@@ -85,16 +96,16 @@ norminette:
 	@make norminette -C $(LIBFT_DIR) --silent
 
 clean:
-	@rm -f $(OBJ) $(OBJ_BONUS)
+	@rm -f $(OBJ) $(OBJ_BONUS) .bonus
 	@make clean -C $(LIBFT_DIR) --silent
 	@make clean -C $(MLX_DIR) --silent
 	@echo "$(MAGENTA)🧹 Arquivos .o limpos$(RESET)"
 
 fclean: clean
-	@rm -f $(NAME) $(NAME_BONUS)
+	@rm -f $(NAME)
 	@make fclean -C $(LIBFT_DIR) --silent
 	@make clean -C $(MLX_DIR) --silent
-	@echo "$(RED)🗑️  Tudo limpo$(RESET)"
+	@echo "$(RED)🗑️ Tudo limpo$(RESET)"
 
 re: fclean all
 

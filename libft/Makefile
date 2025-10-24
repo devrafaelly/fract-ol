@@ -6,7 +6,7 @@
 #    By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/21 11:31:58 by rafaoliv          #+#    #+#              #
-#    Updated: 2025/09/26 18:58:10 by rafaoliv         ###   ########.fr        #
+#    Updated: 2025/10/24 19:10:58 by rafaoliv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,6 @@ INCLUDES = -I.
 
 %.o: %.c
 	@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
-	@echo "$@ ✔️"
 
 $(NAME): $(OBJ)
 	@ar -crs $(NAME) $(OBJ)

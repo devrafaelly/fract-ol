@@ -23,6 +23,13 @@ static void	data_init(t_fractal *fractal)
 	fractal->escape_value = 4;
 	fractal->definition = 100;
 	fractal->zoom = 1.0;
+	fractal->color_end = 0;
+	fractal->color_start = 0;
+	fractal->name = NULL;
+	fractal->shift_x = 0.0;
+	fractal->shift_y = 0.0;
+	fractal->julia_x = 0.0;
+	fractal->julia_y = 0.0;
 }
 
 static void	events_init(t_fractal *fractal)

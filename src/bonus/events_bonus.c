@@ -53,27 +53,41 @@ int	key_handler(int keysym, t_fractal *fractal)
 	return (0);
 }
 
+int	mouse_handler_ship(int button, int x, int y, t_fractal *fractal)
+{
+	double	mouse_x;
+	double	mouse_y;
+
+	mouse_x = (map(x, -2.0, 2.0, WIDTH) * fractal->zoom) + fractal->shift_x;
+	mouse_y = (map(y, -2.0, 2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	if (button == Button5)
+		fractal->zoom *= 1.05;
+	else if (button == Button4)
+		fractal->zoom *= 0.95;
+	fractal->shift_x = mouse_x - (map(x, -2.0, 2.0, WIDTH) * fractal->zoom);
+	fractal->shift_y = mouse_y - (map(y, -2.0, 2.0, HEIGHT) * fractal->zoom);
+	fractal_render(fractal);
+	return (0);
+}
+
 int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 {
-	double	zoom_ratio;
+	double	mouse_x;
+	double	mouse_y;
 
 	if (fractal->type == SHIP)
-	{
-		x = map(x, -2.0, 1.0, WIDTH);
-		y = map(y, 1.0, -2.0, HEIGHT);
-	}
+		mouse_handler_ship(button, x, y, fractal);
 	else
 	{
-		x = map(x, -2.0, 2.0, WIDTH);
-		y = map(y, 2.0, -2.0, HEIGHT);
+		mouse_x = (map(x, -2.0, 2.0, WIDTH) * fractal->zoom) + fractal->shift_x;
+		mouse_y = (map(y, 2.0, -2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+		if (button == Button5)
+			fractal->zoom *= 1.05;
+		else if (button == Button4)
+			fractal->zoom *= 0.95;
+		fractal->shift_x = mouse_x - (map(x, -2.0, 2.0, WIDTH) * fractal->zoom);
+		fractal->shift_y = mouse_y - (map(y, 2.0, -2.0, HEIGHT) * fractal->zoom);
 	}
-	if (button == Button5)
-		zoom_ratio = 1.05;
-	else if (button == Button4)
-		zoom_ratio = 0.95;
-	fractal->shift_x = x - (x - fractal->shift_x) * zoom_ratio;
-	fractal->shift_y = y - (y - fractal->shift_y) * zoom_ratio;
-	fractal->zoom *= zoom_ratio;
 	fractal_render(fractal);
 	return (0);
 }

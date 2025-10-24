@@ -12,24 +12,24 @@
 
 #include "fractol.h"
 
-void	get_color(t_fractal *fractal)
+static void	get_color(t_fractal *fractal)
 {
-	if (fractal->color_scheme == SCHEME_1)
+	if (fractal->scheme == SCHEME_1)
 	{
 		fractal->color_start = MANDEL_BLUE;
 		fractal->color_end = MANDEL_GOLD;
 	}
-	else if (fractal->color_scheme == SCHEME_2)
+	else if (fractal->scheme == SCHEME_2)
 	{
 		fractal->color_start = JULIA_PURPLE;
 		fractal->color_end = JULIA_CIAN;
 	}
-	else if (fractal->color_scheme == SCHEME_3)
+	else if (fractal->scheme == SCHEME_3)
 	{
 		fractal->color_start = SHIP_BLUE;
 		fractal->color_end = SHIP_ORANGE;
 	}
-	else if (fractal->color_scheme == SCHEME_4)
+	else if (fractal->scheme == SCHEME_4)
 	{
 		fractal->color_start = SAF_RED;
 		fractal->color_end = SAF_PINK;

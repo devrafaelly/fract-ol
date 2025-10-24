@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-static void	put_pixel(t_img_data *img, int x, int y, int color)
+void	put_pixel(t_img_data *img, int x, int y, int color)
 {
 	char	*pixel;
 
@@ -29,8 +29,8 @@ static void	set_julia(t_fractal *fractal, int x, int y)
 
 	z.x = (map(x, -2.0, 2.0, WIDTH) * fractal->zoom) + fractal->shift_x;
 	z.y = (map(y, 2.0, -2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
-	c.x = fractal.julia_x;
-	c.y = fractal.julia_y;
+	c.x = fractal->julia_x;
+	c.y = fractal->julia_y;
 	i = 0;
 	while (i < fractal->definition)
 	{
