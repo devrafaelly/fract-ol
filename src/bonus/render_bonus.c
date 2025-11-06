@@ -24,7 +24,7 @@ static void	set_ship(t_fractal *fractal, int x, int y)
 {
 	t_complex	z;
 	t_complex	c;
-	int		i;
+	int			i;
 
 	z.x = 0.0;
 	z.y = 0.0;
@@ -50,7 +50,7 @@ static void	set_julia(t_fractal *fractal, int x, int y)
 {
 	t_complex	z;
 	t_complex	c;
-	int		i;
+	int			i;
 
 	z.x = (map(x, -2.0, 2.0, WIDTH) * fractal->zoom) + fractal->shift_x;
 	z.y = (map(y, 2.0, -2.0, HEIGHT) * fractal->zoom) + fractal->shift_y;
@@ -74,7 +74,7 @@ static void	set_mandel_tric(t_fractal *fractal, int x, int y)
 {
 	t_complex	z;
 	t_complex	c;
-	int		i;
+	int			i;
 
 	z.x = 0.0;
 	z.y = 0.0;
@@ -113,5 +113,6 @@ void	fractal_render(t_fractal *fractal)
 				set_ship(fractal, x, y);
 		}
 	}
-	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img->img_ptr, 0, 0);
+	mlx_put_image_to_window(fractal->mlx, fractal->win,
+		fractal->img->img_ptr, 0, 0);
 }

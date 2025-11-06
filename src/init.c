@@ -28,8 +28,6 @@ static void	data_init(t_fractal *fractal)
 	fractal->name = NULL;
 	fractal->shift_x = 0.0;
 	fractal->shift_y = 0.0;
-	fractal->julia_x = 0.0;
-	fractal->julia_y = 0.0;
 }
 
 static void	events_init(t_fractal *fractal)

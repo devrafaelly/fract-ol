@@ -41,6 +41,7 @@ void	put_color(t_fractal *fractal, int i, int x, int y)
 	int	color;
 
 	get_color(fractal);
-	color = map(i, fractal->color_start, fractal->color_end, fractal->definition);
+	color = map(i, fractal->color_start,
+			fractal->color_end, fractal->definition);
 	put_pixel(fractal->img, x, y, color);
 }

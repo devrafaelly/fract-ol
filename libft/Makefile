@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/21 11:31:58 by rafaoliv          #+#    #+#              #
-#    Updated: 2025/10/24 19:10:58 by rafaoliv         ###   ########.fr        #
+#    Updated: 2025/07/29 22:50:39 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,10 @@ SRCS_BASIC = 	src/basic/ft_isalnum.c \
 				src/basic/ft_strlen.c \
 				src/basic/ft_toupper.c \
 				src/basic/ft_tolower.c \
+				src/basic/ft_isfloat.c \
 				src/basic/ft_atoi.c \
+				src/basic/ft_atof.c \
+				src/basic/ft_atol.c \
 				src/basic/ft_strncmp.c \
 				src/basic/ft_strlcpy.c \
 				src/basic/ft_strlcat.c \

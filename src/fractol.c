@@ -37,7 +37,7 @@ static int	usage(void)
 int	main(int ac, char **av)
 {
 	t_fractal	fractal;
-	
+
 	if (ac < 2)
 		return (usage());
 	if (!ft_strncmp(av[1], "mandelbrot", 10))
@@ -45,6 +45,8 @@ int	main(int ac, char **av)
 	else if (!ft_strncmp(av[1], "julia", 5) && ac == 4)
 	{
 		fractal.type = JULIA;
+		if (!ft_isfloat(av[2]) || !ft_isfloat(av[3]))
+			return (usage());
 		fractal.julia_x = ft_atof(av[2]);
 		fractal.julia_y = ft_atof(av[3]);
 	}

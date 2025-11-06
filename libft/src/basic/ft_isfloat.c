@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_isfloat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 16:12:56 by rafaoliv          #+#    #+#             */
-/*   Updated: 2025/07/24 12:40:46 by rafaoliv         ###   ########.fr       */
+/*   Created: 2025/11/06 15:23:07 by rafaoliv          #+#    #+#             */
+/*   Updated: 2025/11/06 15:23:37 by rafaoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+int	ft_isfloat(char *c)
 {
-	int	signal;
-	int	res;
-
-	signal = 1;
-	res = 0;
-	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
+	if (*c == '-')
+		c++;
+	while (ft_isdigit(*c))
+		c++;
+	if (*c == '.')
+		c++;
+	while (*c)
 	{
-		nptr++;
+		if (ft_isdigit(*c))
+			c++;
+		else
+			return (0);
 	}
-	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
-			signal *= -1;
-		nptr++;
-	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		res = res * 10 + (*nptr - '0');
-		nptr++;
-	}
-	return (res * signal);
+	return (1);
 }

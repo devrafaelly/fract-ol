@@ -39,24 +39,33 @@ static int	usage(void)
 	return (0);
 }
 
+int	check_julia_input(t_fractal *fractal, char *arg1, char *arg2)
+{
+	fractal->type = JULIA;
+	if (!ft_isfloat(arg1) || !ft_isfloat(arg2))
+		return (0);
+	fractal->julia_x = ft_atof(arg1);
+	fractal->julia_y = ft_atof(arg2);
+	return (1);
+}
+
 int	main(int ac, char **av)
 {
 	t_fractal	fractal;
-	
+
 	if (ac < 2)
 		return (usage());
 	fractal.name = av[1];
 	if (!ft_strncmp(av[1], "mandelbrot", 10))
 		fractal.type = MANDELBROT;
 	else if (!ft_strncmp(av[1], "ship", 4))
-        	fractal.type = SHIP;
+		fractal.type = SHIP;
 	else if (!ft_strncmp(av[1], "tricorn", 5))
 		fractal.type = TRICORN;
 	else if (!ft_strncmp(av[1], "julia", 5) && ac == 4)
 	{
-		fractal.type = JULIA;
-		fractal.julia_x = ft_atof(av[2]);
-		fractal.julia_y = ft_atof(av[3]);
+		if (!check_julia_input(&fractal, av[2], av[3]))
+			return (usage());
 	}
 	else
 		return (usage());
